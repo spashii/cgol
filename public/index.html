@@ -1,0 +1,707 @@
+<!DOCTYPE html><html><head>
+      <title>paper</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({"extensions":["tex2jax.js"],"jax":["input/TeX","output/HTML-CSS"],"messageStyle":"none","tex2jax":{"processEnvironments":false,"processEscapes":true,"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"TeX":{"extensions":["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]},"HTML-CSS":{"availableFonts":["TeX"]}});
+        </script>
+        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+        
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="csd205-discrete-mathematics-term-paper">CSD205 - Discrete Mathematics Term Paper</h1>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Topic</th>
+<th style="text-align:left">Conway&apos;s Game of Life</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Submitted On</strong></td>
+<td style="text-align:left"><strong>December 12, 2020</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Submitted By</strong></td>
+<td style="text-align:left"><strong>Ramya Karna (1910110xxx) <br> Sameer Pashikanti (1910110339) <br> Vikram Karthikay Putha (1910110xxx)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 class="mume-header" id="conways-game-of-life">Conway&apos;s Game of Life</h2>
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="height:400px;width:100%;object-fit:cover;margin-bottom:5px;" src="https://www.wired.com/wp-content/uploads/2010/07/LifeHTML5.png" alt="Conway&apos;s Game of Life">
+</div>
+<h3 class="mume-header" id="abstract">Abstract</h3>
+
+<p>In the following paper, we will be discussing Conway&apos;s Game of Life.</p>
+<hr>
+<h3 class="mume-header" id="introduction">Introduction</h3>
+
+<p>The Game of Life is a zero player game, developed by John Conway in 1970. The game is played on an infinite grid of square cells, and its evolution is only determined by its initial state and <em>The Rules of Life</em>:</p>
+<ol>
+<li>Cells with 0 or 1 neighbors die of loneliness</li>
+<li>Cells with 2 or 3 neighbors survive</li>
+<li>Cells with 4 or more neighbors die of overcrowding</li>
+<li>Cells with exactly 3 neighbors, come back to life</li>
+</ol>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif" , alt="Conway&apos;s Game of Life Animated">
+<small><em>
+Conway&apos;s Game of Life
+</em></small></div>
+<p>The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns.</p>
+<hr>
+<h3 class="mume-header" id="how-the-game-is-set-up">How the game is set up</h3>
+
+<p>Apart from being the basic structural, functional and biological unit of life, a <em>cell</em> is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different &quot;states&quot;, on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as generations in this case. Each generation then switches cells on or off depending on the state of the cells that surround it. Each cell is either alive or dead- on or off. And it&apos;s current standing depends on its neighbours.</p>
+<p>//seeds<br>
+The initial pattern constitutes the <em>seed</em> of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a <em>tick</em>. The further generations are created by repe<br>
+//ticks</p>
+<hr>
+<h3 class="mume-header" id="the-rules-of-life">The Rules of Life</h3>
+
+<p>Conway&apos;s Game of Life is governed by these primary rules:</p>
+<ul>
+<li>
+<p><strong>Birth</strong><br>
+a cell that is dead at time <span class="mathjax-exps">$t$</span> will be alive at time <span class="mathjax-exps">$t + 1$</span> if exactly <span class="mathjax-exps">$3$</span> of its <span class="mathjax-exps">$8$</span> neighbors were alive at time <span class="mathjax-exps">$t$</span></p>
+</li>
+<li>
+<p><strong>Death</strong> : a cell can die by:</p>
+<ul>
+<li><strong>Overcrowding</strong><br>
+if a cell is alive at time <span class="mathjax-exps">$t$</span> and <span class="mathjax-exps">$4$</span> or more of its neighbors are also alive at time <span class="mathjax-exps">$t$</span>, the cell will be dead at time <span class="mathjax-exps">$t + 1$</span></li>
+<li><strong>Exposure</strong><br>
+if a live cell at time <span class="mathjax-exps">$t$</span> has only <span class="mathjax-exps">$1$</span> live neighbor or no live neighbors, it will be dead at time <span class="mathjax-exps">$t + 1$</span></li>
+</ul>
+</li>
+<li>
+<p><strong>Survival</strong><br>
+a cell survives from time <span class="mathjax-exps">$t$</span> to time <span class="mathjax-exps">$t + 1$</span> if and only if <span class="mathjax-exps">$2$</span> or <span class="mathjax-exps">$3$</span> of its neighbors are alive at time <span class="mathjax-exps">$t$</span></p>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="applications">Applications</h3>
+
+<ul>
+<li>Glider Gun</li>
+<li>dm application:<br>
+how we could use the Game of Life to make functioning logic gates and perform operations on bit streams</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="patterns">Patterns</h3>
+
+<p>Although it is said that one should never mistake pattern for meaning, in the case of the Game of Life, we might be proving ourselves wrong. The game continues to be quite fascinating, generating a lot of interest in discovering the emerging patterns within.<br>
+We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane &apos;still lives&apos; to ones that become extinct.<br>
+We observe that Conway&apos;s rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome.</p>
+<h4 class="mume-header" id="still-life">Still life</h4>
+
+<p>A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period.<br>
+The most common variety of still life is the <strong>block</strong>. Blocks are used as the constituents of many complex devices, like the Gosper glider gun, that we discuss later. The next most common still life is the <strong>beehive</strong>. A beehive is created in a non-interacting sets of four, the formation being known as a <em>honey farm</em>.</p>
+<p>// block and hive and honey farm images</p>
+<p>Following the hive, we have the <strong>loaf</strong>, and a <strong>bi-loaf</strong> is a pair of loaves found together. On further pairing, we have what is called a <strong>bakery</strong>.<br>
+There is no shortage of patterns that we can observe in the game, but we only have a day to finish this so no thank you.<br>
+// loaf, bi-loaf, bakery images</p>
+<p>The most intriguing part of still life, we found to be the <em>eaters</em>. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the <strong>fish-hook</strong>, and another device that is similar but doesn&apos;t quite &apos;eat&apos; the pattern is a <strong>reflector</strong>, that is capable of altering the direction of an incoming spaceship.</p>
+<p>---small line</p>
+<p>In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an <em>infinite</em> form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a <strong>glider gun</strong>. The glider gun is a pattern that &apos;fires&apos; a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form.</p>
+<p>// glider gun image</p>
+<h2 class="mume-header" id="im-sick-of-patterns-someone-else-take-over-pls">I&apos;M SICK OF PATTERNS SOMEONE ELSE TAKE OVER PLS</h2>
+
+<hr>
+<h3 class="mume-header" id="discrete-math-think-of-a-heading">Discrete Math (think of a heading)</h3>
+
+<p>Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. <strong>Spaceships</strong>, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patters. These interactions can be further organized to establish basic computational procedures like <em>logic gates</em> and simple memory counters.</p>
+<p>A <em>Turing machine</em> is a hypothetical machine that can simulate any computer algorithm, no matter how complicated. In the theory of computation, many major complexity classes can be characterized by an appropriately restricted Turing machine, for instance the major P versus NP classes.</p>
+<p>The above properties imply that the Game of Life can be considered <em>Turing complete</em>, making it theoritically equivalent to a &apos;Universal Turing Machine&apos;. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding.</p>
+<hr>
+<h1 class="mume-header" id="heading-1">heading 1</h1>
+
+<h2 class="mume-header" id="heading-2">heading 2</h2>
+
+<h3 class="mume-header" id="heading-3">heading 3</h3>
+
+<h4 class="mume-header" id="heading-4">heading 4</h4>
+
+<h5 class="mume-header" id="heading-5">heading 5</h5>
+
+<h6 class="mume-header" id="heading-6">heading 6</h6>
+
+<hr>
+<p><em>italic</em><br>
+<strong>bold</strong><br>
+<s>strikethrough</s></p>
+<hr>
+<ul>
+<li>point 1</li>
+<li>point 2
+<ul>
+<li>sub point</li>
+<li>sub point 2
+<ul>
+<li>sub poit 3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>back to the actual point</li>
+</ul>
+<ol>
+<li>order</li>
+<li>order</li>
+<li>order3</li>
+</ol>
+<hr>
+<table>
+<thead>
+<tr>
+<th>topic</th>
+<th>heading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hello</td>
+<td>10</td>
+</tr>
+<tr>
+<td>842r</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Hi <span class="mathjax-exps">$z = x + y$</span>.</p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
+<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
+<hr>
+<p><img src="https://i.pinimg.com/originals/42/b8/21/42b8212c9b9f4122b2c83f4914332f51.gif" alt="naruto rasengan"></p>
+<p><a href="http://google.com">link to google</a></p>
+<p><a href="https://youtu.be/6avJHaC3C2U?t=272">link you have to watch</a></p>
+<p><a href="cgol.html">link to implementation</a></p>
+<hr>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
