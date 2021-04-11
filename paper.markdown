@@ -1,22 +1,39 @@
-# CSD205 - Discrete Mathematics Term Paper
+# CSD205 - Discrete Mathematics Paper
 
 | Topic            | Conway's Game of Life                                                                                     |
 | :--------------- | :-------------------------------------------------------------------------------------------------------- |
-| **Submitted On** | **December 12, 2020**                                                                                     |
+| **Submitted On** | **December 14, 2020**                                                                                     |
 | **Submitted By** | **Ramya Karna (1910110308) <br> Sameer Pashikanti (1910110339) <br> Vikram Karthikay Putha (1910110445)** |
 
 ---
 
-## Conway's Game of Life
+# Conway's Game of Life
 
 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
 <img style="height:400px;width:100%;object-fit:cover;margin-bottom:5px;"
-src="https://www.wired.com/wp-content/uploads/2010/07/LifeHTML5.png" alt="Conway's Game of Life">
+src="https://lh3.googleusercontent.com/C6HkzTZOrAtlLPkY6tHcUQMX1BoahTG_Gt4ueO_G0dV-J6dqSbT7ElD6Ddg_vg2cNI1D9cIBQMUNaPWIkPrqGVpbE9RY_9Q3Fn0k=s850" alt="Conway's Game of Life">
 </div>
+
+---
+
+### Table of Contents
+
+| S. No | Topic                                                                                                                                                                                                                    |
+| :---: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  1.   | [Abstract](#abstract)                                                                                                                                                                                                    |
+|  2.   | [Introduction](#introduction)                                                                                                                                                                                            |
+|  3.   | [Setup of the Game](#setup-of-the-game)                                                                                                                                                                                  |
+|  4.   | [The Rules of Life](#the-rules-of-life)                                                                                                                                                                                  |
+|  5.   | [Evolution of the Game](#evolution-of-the-game)<br><ul><li>[Halting Problem](#halting-problem)</li><li>[Still Life](#still-life)</li><li>[Logic Gates](#logic-gates)</li><li>[Turing Machine](#turing-machine)</li></ul> |
+|  6.   | [Legacy](#legacy)                                                                                                                                                                                                        |
+|  7.   | [Conclusion](#conclusion)                                                                                                                                                                                                |
+|  8.   | [References](#references)                                                                                                                                                                                                |
+
+---
 
 ### Abstract
 
-In the following paper, we will be discussing the mathematical implications and ramifications surrounding Conway's Game of Life. 
+In the following paper, we will be discussing the mathematical implications and ramifications surrounding Conway's Game of Life. While studying the simple rules that make up this game, we attempt to analyse deep connections with various domains of mathematics. Through this paper, we aim to introduce the reader to the Game of Life as inaugarated by John Conway and look briefly into few mathematical problems along the way.
 
 ---
 
@@ -31,26 +48,24 @@ The Game of Life is a zero player game, developed by John Conway in 1970. The ga
 
 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
 <img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;"
-src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif", alt="Conway's Game of Life Animated">
-<small><em>
-Conway's Game of Life
-</em></small></div>
+src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif" alt="Conway's Game of Life Animated">
+<small><em>Conway's Game of Life</em></small></div>
 
+The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns and developing its mathematics further. 
 
-The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns. 
-
-[Click here to see an implementation of The Game of Life](cgal.html)
+[Click here to see an implementation of The Game of Life](cgol.html)
 
 It starts with a grid with the size of your screen and each cell is either on or off. As the game progresses, the cells change states and patterns emerge- or do they?
 
-
 ---
 
-### Set up of the Game
+### Setup of the Game
 
-Apart from being the basic structural, functional and biological unit of life, a *cell* is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different "states", on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as generations in this case. Each generation then switches cells on or off depending on the state of the cells that surround it. Each cell is either alive or dead- on or off. And it's current standing depends on its neighbours. 
+Apart from being the basic structural, functional and biological unit of life, a **cell** is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different **states**, on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as **generations** in this case. Each generation then switches cells on or off depending on the state of the cells that surround it, known as its **neighbors**. 
 
-The initial pattern constitutes the *seed* of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a *tick*. The further generations are created by continually letting the cells interact with each other bounded by the *rule set*.
+The initial pattern constitutes the **seed** of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a **tick**. The further generations are created by continually letting the cells interact with each other bounded by the rule set.
+
+John Conway and his colleagues brainstormed many variations of the rules, the whole discussion boiled down to this:  if the birth rule was too strong– everything expanded. If the death rules were too strong– everything died. It turned out to be quite hard to balance the rules. Con*way* still found a *way*.
 
 ---
 
@@ -74,18 +89,31 @@ a cell survives from time $t$ to time $t + 1$ if and only if $2$ or $3$ of its n
 
 ### Evolution of the Game
 
+Given an input grid, one cannot determine whether the board would stablize in any given number of moves. Even John Conway himself could not look at a board and determine the status of the game in the next generation and whether the game would end or not. This introduces us to one of the most important problems in computability theory, **the halting problem**. There simply isn't any algorithmic way to determine the result of the game.
+
+> #### The Halting Problem
+> Halting, essentially means terminating. The Halting problem talks about whether the program, when fed with certain input, will finish running or continue to run forever. In 1936, it was proved by Alan Turing that a general algorithm to solve this 'problem' doesn't exist. An interesting fact about this problem is that it is believed the term 'halting' was most likely used by Martin Davis in a series of lectures given by him in 1952.  
+> Let $A_{TM}$	$=	\{(M,w)|  M$ is a Turing Machine and	$M$	accepts	$w\}$, 
+> w being the input provided
+> $A_{TM}$ is undecidable : 
+> * The only factor for undecidability would be a *loop of M on w*.
+> * The question is: can we determine if it will loop forever? It is impossible to determing if a Turing Machine will always halt on every possible input.
+> We can simulate M on input w if :
+> > * M accepts w -> accept(M, w)
+> > * M rejects w -> reject(M, w)
+> We can note that this is Turing *recognizable*.
+
 Although it is said that one should never mistake pattern for meaning, in the case of the Game of Life, we might be proving ourselves wrong. The game continues to be quite fascinating, generating a lot of interest in discovering the emerging patterns within. 
-We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane *still lives* to ones that become extinct. 
-We observe that Conway's rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome. 
+
+We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane **still lives** to ones that become extinct. We observe that Conway's rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome. 
 
 
 #### Still life
-A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period.
-The most common variety of still life is the **block**. Blocks are used as the constituents of many complex devices, like the *Gosper Glider Gun*, that we discuss later. The next most common still life is the **beehive**. A beehive is created in non-interacting sets of four, the formation being known as a *honey farm*.
+A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period. The most common variety of still life is the **block**. Blocks are used as the constituents of many complex devices, like the *Gosper Glider Gun*, that we discuss later. The next most common still life is the **beehive**. A beehive is created in non-interacting sets of four, the formation being known as a *honey farm*.
 
 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:15px">
 <img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:-5px;"
-src="https://iq.opengenus.org/content/images/2019/03/staticGameofLife.png", alt="Still Lifes">
+src="https://iq.opengenus.org/content/images/2019/03/staticGameofLife.png" alt="Still Lifes">
 <small><em>
 Still Lifes
 </em></small></div>
@@ -93,9 +121,9 @@ Still Lifes
 
 Following the hive, we have the **loaf**, and a **bi-loaf** is a pair of loaves found together. On further pairing, we have what is called a **bakery**. 
 
-The patterns above are among commonly occurring patterns that are stable 
+The patterns discussed above are among commonly occurring patterns that are stable.
 
-<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
 <img style="max-height:300px;max-width:100%;object-fit:cover;margin-bottom:5px;"
 src="https://user-images.githubusercontent.com/63326129/101979337-45d60100-3c82-11eb-8067-4c5e2e59d954.png", alt="Stable Configuration">
 <small><em>
@@ -103,48 +131,139 @@ A Stable Configuration involving Still Lifes
 </em></small></div>
 
 
-The most intriguing part of still life, we found to be the *eaters*. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the **fish-hook**, and another device that is similar but doesn't quite 'eat' the pattern is a **reflector**, that is capable of altering the direction of an incoming spaceship. 
+The most intriguing part of still life, we found to be the **eaters**. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the **fish-hook**, and another device that is similar but doesn't quite 'eat' the pattern is a **reflector**, that is capable of altering the direction of an incoming spaceship. 
 
----small line
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;"
+src="https://user-images.githubusercontent.com/63326129/102098257-fabc1980-3e4c-11eb-9cb0-cb222343d8a3.gif" alt="An Eater">
+<small><em>
+An Eater
+</em></small></div>
 
-In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an *infinite* form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a **glider gun**. The glider gun is a pattern that 'fires' a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form. 
+In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an *infinite* form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a **Glider Gun**.
 
-// glider gun image
+A glider gun is a pattern that *fires* a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form.
 
-## I'M SICK OF PATTERNS SOMEONE ELSE TAKE OVER PLS
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:40px;margin-bottom:20px">
+<div>
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;margin-right:20px"
+src="https://vignette.wikia.nocookie.net/emergentuniverse/images/d/d0/Game_of_life_animated_glider_2.gif/revision/latest/scale-to-width-down/340?cb=20120305021401", alt="A Glider">
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;"
+src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif", alt="A Glider Gun">
+</div>
+<small><em>
+A Glider(left) and a Glider Gun(right)
+</em></small></div>
+
+The discovery of these structures was crucial in further discoveries of even more intricate and mobile structures. People started calling them **spaceships**.
+
+<p align="center"><iframe width="100%" height="350" src="https://www.youtube.com/embed/C2vgICfQawE?start=69" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>
+
+
+Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. **Spaceships**, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patterns. These interactions can be further organized to establish basic computational procedures like logic gates and simple memory counters.
+
+
+#### Logic Gates
+
+We have seen that patterns formed in the Game of Life can be used to generate and destroy signals- take for instance, the eater and glider gun. 
+
+From this, we get our one, and our zero. When we have a one and a zero, we have what is known is binary logic. If we have binary logic, we can make logic gates. 
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:20px;margin-bottom:25px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;"
+src="https://computerscienceigsce.files.wordpress.com/2016/08/comp-sci-logic-gates.png?w=520", alt="Logic Gates">
+<small><em>Binary Logic Gates</em></small>
+</div>
+
+While trying to implement logic gates using the Game, we come across these three requirements:
+* Some kind of electrical pulses to represent input
+* Wires to transmit the electrical pulses
+* Devices to process the given input and compute the Boolean output
+
+Using gliders, we can encode these, utilizing components from the Game of Life:
+* I/O pulses $=>$ Gliders
+* Wires $=>$ Glider movement trajectories
+* Processing devices $=>$ Glider collisions
+
+Here are a few logic gates implemented through The Game of Life:
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="height:350px;max-width:100%;margin-bottom:5px;"
+src="https://user-images.githubusercontent.com/63326129/102111896-f8fa5200-3e5c-11eb-9362-b5d69dd8a34b.gif", alt="NOT Gate">
+<small><em>
+NOT Gate
+</em></small></div>
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="height:350px;max-width:100%;margin-bottom:5px;"
+src="https://user-images.githubusercontent.com/63326129/102113174-b9346a00-3e5e-11eb-9846-9362db4aecb2.gif", alt="AND Gate">
+<small><em>
+AND Gate
+</em></small></div>
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;width:100%;object-fit:cover;margin-bottom:5px;"
+src="http://article.sapub.org/image/10.5923.j.ijis.20160601.02_010.gif", alt="">
+<small><em>
+Requirements to Construct Gates
+</em></small></div>
+
+
+We also implement some glider guns, that play no role in the production of input, but they help in executing collision, or deflecting the path of the glider stream to enhance the collision, termed **process guns**. Just like process guns, eaters are used to destroy some gliders that do not help in determining the output. From the above findings, we see that a stream of gliders can encode any data.
+For instance, take  `1,0,1 = glider, no glider, glider`
+
+We handled the input so far- and our work seems to manipulate our input when it is true fairly easily. However, we must also program the gliders to propagate only if the input is true- or stop when the input is false. This can be done via coupling the glider gun with a block- the still life we learnt about in the previous section; a glider is eliminated by a block during collision.
+
+Essentially, in an input stream, a glider indicates a true pulse, and a *missing* glider indicates a false pulse. 
+
+Using these tools, some people have gone so far as to code The Game of Life using the Game of Life! 
+
+<p align="center">
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/xP5-iIeKXE8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+
+This introduces us to the concept of *Turing Machines*.
+
+> #### Turing Machine
+> A *Turing machine* is a hypothetical machine that can simulate any computer algorithm, no matter how complicated. In the theory of computation, many major complexity classes can be characterized by an appropriately restricted Turing machine, for instance the major P versus NP classes.
+
+The above properties imply that the Game of Life can be considered *Turing complete*, making it theoritically equivalent to a 'Universal Turing Machine'. A simulation of the Game of Life universality was proved by its creator; Conway showed that a universal Turing machine is embedded in the game, that the behaviour of the Turing machine is imitated by the space-time dynamic of the game's cellular automaton. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding.
 
 ---
 
-### Discrete Math (think of a heading)
+### Legacy
 
-Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. **Spaceships**, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patters. These interactions can be further organized to establish basic computational procedures like *logic gates* and simple memory counters.
+John Conway died on the 11th of April, 2020 due to COVID-19 complications. Conway's work on the Game of Life opened up several avenues in the field of mathematical research- primarily the subject of 'cellular automata'.   
 
-A *Turing machine* is a hypothetical machine that can simulate any computer algorithm, no matter how complicated. In the theory of computation, many major complexity classes can be characterized by an appropriately restricted Turing machine, for instance the major P versus NP classes. 
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;"
+src="https://rjlipton.files.wordpress.com/2020/04/johnhortonconway1987.jpg" alt="John Conway">
+<small><em>
+John Conway
+</em></small></div>
 
-The above properties imply that the Game of Life can be considered *Turing complete*, making it theoritically equivalent to a 'Universal Turing Machine'. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding. 
-
----
----
-
-### todo :star:
-- [ ] conclusion
-- [ ] logic gate 
-- [ ] roll numbers
-- [ ] math
-- [ ] watch the vids and inerpret
-- [ ] theorem of mathematical logic 
-- [ ] halting
-- [ ] his death and legacy
-- [ ] the invention of LC
-- [ ] problem set and solvable set
-- [ ] effective calculabitiyt
-
-
+In an interview, on being asked if he hated the Game of Life, despite being proud of his achievement, he still believed that it overshadowed every other aspect of his mathematical work- or life, in general. Conway worked on several branches of mathematics:  combinatorial game theory, group theory, knot theory and geometric topology. 
 
 ---
 
-[The Art of Code - Dylan Beattie](https://youtu.be/6avJHaC3C2U?t=272)
+### Conclusion
 
-[Implementation of CGOL](cgol.html)
+We observe that many ideas that have been originally developed in Conway's game have found themselves being applied in other fields, a particularly cool implementation being creating sound patterns using a Musical Instrument Digital Interface (MDMI)- essentially creating music! Similarly, the reach of John Conway's Game of Life touched upon various domains, in mathematics and everyday life. It is baffling how four simple rules can effectively be used as a basis for explaining various phenomena, ranging from astronomical events to the evolution and survival of various cells, species and biological organisms.
+Considering the extent of the applications of the Game, it is no surprise that one cannot limit the Game of Life to a mere mathematical game. 
+
+---
+
+### References
+
+* http://www.scholarpedia.org/article/Game_of_Life
+* http://article.sapub.org/10.5923.j.ijis.20160601.02.html
+* http://rendell-attic.org/gol/tm.htm
+* https://link.springer.com/chapter/10.1007%2F978-1-4471-0129-1_17
+* https://mathworld.wolfram.com/GameofLife.html
+* http://golly.sourceforge.net
+* https://en.wikipedia.org/wiki/Halting_problem
+* http://pi.math.cornell.edu/~lipa/mec/lesson6.html
+* https://ocw.mit.edu/courses/mathematics/18-s997-introduction-to-matlab-programming-fall-2011/conway-game-of-life/conway-game-of-life-implementation/
+* https://beltoforion.de/en/game_of_life/
 
 ---

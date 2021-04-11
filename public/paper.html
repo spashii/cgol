@@ -1,0 +1,515 @@
+<!DOCTYPE html><html><head>
+      <title>Conway's Game of Life</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="csd205-discrete-mathematics-paper">CSD205 - Discrete Mathematics Paper</h1>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Topic</th>
+<th style="text-align:left">Conway&apos;s Game of Life</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Submitted On</strong></td>
+<td style="text-align:left"><strong>December 14, 2020</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Submitted By</strong></td>
+<td style="text-align:left"><strong>Ramya Karna (1910110308) <br> Sameer Pashikanti (1910110339) <br> Vikram Karthikay Putha (1910110445)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 class="mume-header" id="conways-game-of-life">Conway&apos;s Game of Life</h1>
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="height:400px;width:100%;object-fit:cover;margin-bottom:5px;" src="https://lh3.googleusercontent.com/C6HkzTZOrAtlLPkY6tHcUQMX1BoahTG_Gt4ueO_G0dV-J6dqSbT7ElD6Ddg_vg2cNI1D9cIBQMUNaPWIkPrqGVpbE9RY_9Q3Fn0k=s850" alt="Conway&apos;s Game of Life">
+</div>
+<hr>
+<h3 class="mume-header" id="table-of-contents">Table of Contents</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center">S. No</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1.</td>
+<td><a href="#abstract">Abstract</a></td>
+</tr>
+<tr>
+<td style="text-align:center">2.</td>
+<td><a href="#introduction">Introduction</a></td>
+</tr>
+<tr>
+<td style="text-align:center">3.</td>
+<td><a href="#setup-of-the-game">Setup of the Game</a></td>
+</tr>
+<tr>
+<td style="text-align:center">4.</td>
+<td><a href="#the-rules-of-life">The Rules of Life</a></td>
+</tr>
+<tr>
+<td style="text-align:center">5.</td>
+<td><a href="#evolution-of-the-game">Evolution of the Game</a><br><ul><li><a href="#halting-problem">Halting Problem</a></li><li><a href="#still-life">Still Life</a></li><li><a href="#logic-gates">Logic Gates</a></li><li><a href="#turing-machine">Turing Machine</a></li></ul></td>
+</tr>
+<tr>
+<td style="text-align:center">6.</td>
+<td><a href="#legacy">Legacy</a></td>
+</tr>
+<tr>
+<td style="text-align:center">7.</td>
+<td><a href="#conclusion">Conclusion</a></td>
+</tr>
+<tr>
+<td style="text-align:center">8.</td>
+<td><a href="#references">References</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 class="mume-header" id="abstract">Abstract</h3>
+
+<p>In the following paper, we will be discussing the mathematical implications and ramifications surrounding Conway&apos;s Game of Life. While studying the simple rules that make up this game, we attempt to analyse deep connections with various domains of mathematics. Through this paper, we aim to introduce the reader to the Game of Life as inaugarated by John Conway and look briefly into few mathematical problems along the way.</p>
+<hr>
+<h3 class="mume-header" id="introduction">Introduction</h3>
+
+<p>The Game of Life is a zero player game, developed by John Conway in 1970. The game is played on an infinite grid of square cells, and its evolution is only determined by its initial state and <em>The Rules of Life</em>:</p>
+<ol>
+<li>Cells with 0 or 1 neighbors die of loneliness</li>
+<li>Cells with 2 or 3 neighbors survive</li>
+<li>Cells with 4 or more neighbors die of overcrowding</li>
+<li>Cells with exactly 3 neighbors, come back to life</li>
+</ol>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif" alt="Conway&apos;s Game of Life Animated">
+<small><em>Conway&apos;s Game of Life</em></small></div>
+<p>The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns and developing its mathematics further.</p>
+<p><a href="cgol.html">Click here to see an implementation of The Game of Life</a></p>
+<p>It starts with a grid with the size of your screen and each cell is either on or off. As the game progresses, the cells change states and patterns emerge- or do they?</p>
+<hr>
+<h3 class="mume-header" id="setup-of-the-game">Setup of the Game</h3>
+
+<p>Apart from being the basic structural, functional and biological unit of life, a <strong>cell</strong> is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different <strong>states</strong>, on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as <strong>generations</strong> in this case. Each generation then switches cells on or off depending on the state of the cells that surround it, known as its <strong>neighbors</strong>.</p>
+<p>The initial pattern constitutes the <strong>seed</strong> of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a <strong>tick</strong>. The further generations are created by continually letting the cells interact with each other bounded by the rule set.</p>
+<p>John Conway and his colleagues brainstormed many variations of the rules, the whole discussion boiled down to this:  if the birth rule was too strong&#x2013; everything expanded. If the death rules were too strong&#x2013; everything died. It turned out to be quite hard to balance the rules. Con<em>way</em> still found a <em>way</em>.</p>
+<hr>
+<h3 class="mume-header" id="the-rules-of-life">The Rules of Life</h3>
+
+<p>Conway&apos;s Game of Life is governed by this primary rule set:</p>
+<ul>
+<li>
+<p><strong>Birth</strong><br>
+a cell that is dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> will be alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> if exactly <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> of its <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> neighbours were alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span></p>
+</li>
+<li>
+<p><strong>Death</strong> : a cell can die by:</p>
+<ul>
+<li><strong>Overcrowding</strong><br>
+if a cell is alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> or more of its neighbours are also alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>, the cell will be dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+<li><strong>Exposure</strong><br>
+if a live cell at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> has only <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> live neighbour or no live neighbours, it will be dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p><strong>Survival</strong><br>
+a cell survives from time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> to time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> if and only if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> or <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> of its neighbours are alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span></p>
+</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="evolution-of-the-game">Evolution of the Game</h3>
+
+<p>Given an input grid, one cannot determine whether the board would stablize in any given number of moves. Even John Conway himself could not look at a board and determine the status of the game in the next generation and whether the game would end or not. This introduces us to one of the most important problems in computability theory, <strong>the halting problem</strong>. There simply isn&apos;t any algorithmic way to determine the result of the game.</p>
+<blockquote>
+<h4>The Halting Problem</h4>
+<p>Halting, essentially means terminating. The Halting problem talks about whether the program, when fed with certain input, will finish running or continue to run forever. In 1936, it was proved by Alan Turing that a general algorithm to solve this &apos;problem&apos; doesn&apos;t exist. An interesting fact about this problem is that it is believed the term &apos;halting&apos; was most likely used by Martin Davis in a series of lectures given by him in 1952.<br>
+Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mrow><mi>T</mi><mi>M</mi></mrow></msub></mrow><annotation encoding="application/x-tex">A_{TM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo stretchy="false">{</mo><mo stretchy="false">(</mo><mi>M</mi><mo separator="true">,</mo><mi>w</mi><mo stretchy="false">)</mo><mi mathvariant="normal">&#x2223;</mi><mi>M</mi></mrow><annotation encoding="application/x-tex">=	\{(M,w)|  M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span><span class="mord">&#x2223;</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> is a Turing Machine and	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span>	accepts	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">w\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">}</span></span></span></span>,<br>
+w being the input provided<br>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mrow><mi>T</mi><mi>M</mi></mrow></msub></mrow><annotation encoding="application/x-tex">A_{TM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is undecidable :</p>
+<ul>
+<li>The only factor for undecidability would be a <em>loop of M on w</em>.</li>
+<li>The question is: can we determine if it will loop forever? It is impossible to determing if a Turing Machine will always halt on every possible input.<br>
+We can simulate M on input w if :</li>
+</ul>
+<blockquote>
+<ul>
+<li>M accepts w -&gt; accept(M, w)</li>
+<li>M rejects w -&gt; reject(M, w)<br>
+We can note that this is Turing <em>recognizable</em>.</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>Although it is said that one should never mistake pattern for meaning, in the case of the Game of Life, we might be proving ourselves wrong. The game continues to be quite fascinating, generating a lot of interest in discovering the emerging patterns within.</p>
+<p>We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane <strong>still lives</strong> to ones that become extinct. We observe that Conway&apos;s rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome.</p>
+<h4 class="mume-header" id="still-life">Still life</h4>
+
+<p>A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period. The most common variety of still life is the <strong>block</strong>. Blocks are used as the constituents of many complex devices, like the <em>Gosper Glider Gun</em>, that we discuss later. The next most common still life is the <strong>beehive</strong>. A beehive is created in non-interacting sets of four, the formation being known as a <em>honey farm</em>.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:15px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:-5px;" src="https://iq.opengenus.org/content/images/2019/03/staticGameofLife.png" alt="Still Lifes">
+<small><em>
+Still Lifes
+</em></small></div>
+<p>Following the hive, we have the <strong>loaf</strong>, and a <strong>bi-loaf</strong> is a pair of loaves found together. On further pairing, we have what is called a <strong>bakery</strong>.</p>
+<p>The patterns discussed above are among commonly occurring patterns that are stable.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="max-height:300px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/101979337-45d60100-3c82-11eb-8067-4c5e2e59d954.png" , alt="Stable Configuration">
+<small><em>
+A Stable Configuration involving Still Lifes
+</em></small></div>
+<p>The most intriguing part of still life, we found to be the <strong>eaters</strong>. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the <strong>fish-hook</strong>, and another device that is similar but doesn&apos;t quite &apos;eat&apos; the pattern is a <strong>reflector</strong>, that is capable of altering the direction of an incoming spaceship.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102098257-fabc1980-3e4c-11eb-9cb0-cb222343d8a3.gif" alt="An Eater">
+<small><em>
+An Eater
+</em></small></div>
+<p>In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an <em>infinite</em> form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a <strong>Glider Gun</strong>.</p>
+<p>A glider gun is a pattern that <em>fires</em> a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:40px;margin-bottom:20px">
+<div>
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;margin-right:20px" src="https://vignette.wikia.nocookie.net/emergentuniverse/images/d/d0/Game_of_life_animated_glider_2.gif/revision/latest/scale-to-width-down/340?cb=20120305021401" , alt="A Glider">
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif" , alt="A Glider Gun">
+</div>
+<small><em>
+A Glider(left) and a Glider Gun(right)
+</em></small></div>
+<p>The discovery of these structures was crucial in further discoveries of even more intricate and mobile structures. People started calling them <strong>spaceships</strong>.</p>
+<p align="center"><iframe width="100%" height="350" src="https://www.youtube.com/embed/C2vgICfQawE?start=69" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p><p>
+</p><p>Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. <strong>Spaceships</strong>, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patterns. These interactions can be further organized to establish basic computational procedures like logic gates and simple memory counters.</p>
+<h4>Logic Gates</h4>
+<p>We have seen that patterns formed in the Game of Life can be used to generate and destroy signals- take for instance, the eater and glider gun.</p>
+<p>From this, we get our one, and our zero. When we have a one and a zero, we have what is known is binary logic. If we have binary logic, we can make logic gates.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:20px;margin-bottom:25px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://computerscienceigsce.files.wordpress.com/2016/08/comp-sci-logic-gates.png?w=520" , alt="Logic Gates">
+<small><em>Binary Logic Gates</em></small>
+</div>
+<p>While trying to implement logic gates using the Game, we come across these three requirements:</p>
+<ul>
+<li>Some kind of electrical pulses to represent input</li>
+<li>Wires to transmit the electrical pulses</li>
+<li>Devices to process the given input and compute the Boolean output</li>
+</ul>
+<p>Using gliders, we can encode these, utilizing components from the Game of Life:</p>
+<ul>
+<li>I/O pulses <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Gliders</li>
+<li>Wires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Glider movement trajectories</li>
+<li>Processing devices <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Glider collisions</li>
+</ul>
+<p>Here are a few logic gates implemented through The Game of Life:</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102111896-f8fa5200-3e5c-11eb-9362-b5d69dd8a34b.gif" , alt="NOT Gate">
+<small><em>
+NOT Gate
+</em></small></div>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102113174-b9346a00-3e5e-11eb-9846-9362db4aecb2.gif" , alt="AND Gate">
+<small><em>
+AND Gate
+</em></small></div>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="http://article.sapub.org/image/10.5923.j.ijis.20160601.02_010.gif" , alt>
+<small><em>
+Requirements to Construct Gates
+</em></small></div>
+<p>We also implement some glider guns, that play no role in the production of input, but they help in executing collision, or deflecting the path of the glider stream to enhance the collision, termed <strong>process guns</strong>. Just like process guns, eaters are used to destroy some gliders that do not help in determining the output. From the above findings, we see that a stream of gliders can encode any data.<br>
+For instance, take  <code>1,0,1 = glider, no glider, glider</code></p>
+<p>We handled the input so far- and our work seems to manipulate our input when it is true fairly easily. However, we must also program the gliders to propagate only if the input is true- or stop when the input is false. This can be done via coupling the glider gun with a block- the still life we learnt about in the previous section; a glider is eliminated by a block during collision.</p>
+<p>Essentially, in an input stream, a glider indicates a true pulse, and a <em>missing</em> glider indicates a false pulse.</p>
+<p>Using these tools, some people have gone so far as to code The Game of Life using the Game of Life!</p>
+<p align="center">
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/xP5-iIeKXE8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+<p>This introduces us to the concept of <em>Turing Machines</em>.</p>
+<blockquote>
+<h4>Turing Machine</h4>
+<p>A <em>Turing machine</em> is a hypothetical machine that can simulate any computer algorithm, no matter how complicated. In the theory of computation, many major complexity classes can be characterized by an appropriately restricted Turing machine, for instance the major P versus NP classes.</p>
+</blockquote>
+<p>The above properties imply that the Game of Life can be considered <em>Turing complete</em>, making it theoritically equivalent to a &apos;Universal Turing Machine&apos;. A simulation of the Game of Life universality was proved by its creator; Conway showed that a universal Turing machine is embedded in the game, that the behaviour of the Turing machine is imitated by the space-time dynamic of the game&apos;s cellular automaton. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding.</p>
+<hr>
+<h3 class="mume-header" id="legacy">Legacy</h3>
+
+<p>John Conway passed away in April 2020 due to COVID-19 complications. His work continues to be celebrated, being the most written about  John Conway&apos;s work on the Game of Life opened up several avenues in the field of mathematical research- primarily the subject of &apos;cellular automata&apos;.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://rjlipton.files.wordpress.com/2020/04/johnhortonconway1987.jpg" alt="John Conway">
+<small><em>
+John Conway
+</em></small></div>
+<p>In an interview, on being asked if he hated the Game of Life, despite being proud of his achievement, he still believed that it overshadowed every other aspect of his mathematical work- or life, in general. Conway worked on several branches of mathematics:  combinatorial game theory, group theory, knot theory and geometric topology.</p>
+<hr>
+<h3 class="mume-header" id="conclusion">Conclusion</h3>
+
+<hr>
+<h3 class="mume-header" id="references">References</h3>
+
+<ul>
+<li><a href="http://www.scholarpedia.org/article/Game_of_Life">http://www.scholarpedia.org/article/Game_of_Life</a></li>
+<li><a href="http://article.sapub.org/10.5923.j.ijis.20160601.02.html">http://article.sapub.org/10.5923.j.ijis.20160601.02.html</a></li>
+<li><a href="http://rendell-attic.org/gol/tm.htm">http://rendell-attic.org/gol/tm.htm</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007%2F978-1-4471-0129-1_17">https://link.springer.com/chapter/10.1007%2F978-1-4471-0129-1_17</a></li>
+<li><a href="https://mathworld.wolfram.com/GameofLife.html">https://mathworld.wolfram.com/GameofLife.html</a></li>
+<li><a href="http://golly.sourceforge.net">http://golly.sourceforge.net</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Halting_problem">https://en.wikipedia.org/wiki/Halting_problem</a></li>
+<li><a href="http://pi.math.cornell.edu/~lipa/mec/lesson6.html">http://pi.math.cornell.edu/~lipa/mec/lesson6.html</a></li>
+<li><a href="https://ocw.mit.edu/courses/mathematics/18-s997-introduction-to-matlab-programming-fall-2011/conway-game-of-life/conway-game-of-life-implementation/">https://ocw.mit.edu/courses/mathematics/18-s997-introduction-to-matlab-programming-fall-2011/conway-game-of-life/conway-game-of-life-implementation/</a></li>
+<li><a href="https://beltoforion.de/en/game_of_life/">https://beltoforion.de/en/game_of_life/</a></li>
+</ul>
+<hr>
+
+      </div>
+    

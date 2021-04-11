@@ -1,14 +1,9 @@
 <!DOCTYPE html><html><head>
-      <title>paper</title>
+      <title>Conway's Game of Life</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({"extensions":["tex2jax.js"],"jax":["input/TeX","output/HTML-CSS"],"messageStyle":"none","tex2jax":{"processEnvironments":false,"processEscapes":true,"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"TeX":{"extensions":["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]},"HTML-CSS":{"availableFonts":["TeX"]}});
-        </script>
-        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
-        
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
       
       
       
@@ -266,7 +261,7 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="csd205-discrete-mathematics-term-paper">CSD205 - Discrete Mathematics Term Paper</h1>
+      <h1 class="mume-header" id="csd205-discrete-mathematics-paper">CSD205 - Discrete Mathematics Paper</h1>
 
 <table>
 <thead>
@@ -278,23 +273,69 @@ pre[data-line] .line-highlight[data-end]:after {
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Submitted On</strong></td>
-<td style="text-align:left"><strong>December 12, 2020</strong></td>
+<td style="text-align:left"><strong>December 14, 2020</strong></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>Submitted By</strong></td>
-<td style="text-align:left"><strong>Ramya Karna (1910110xxx) <br> Sameer Pashikanti (1910110339) <br> Vikram Karthikay Putha (1910110xxx)</strong></td>
+<td style="text-align:left"><strong>Ramya Karna (1910110308) <br> Sameer Pashikanti (1910110339) <br> Vikram Karthikay Putha (1910110445)</strong></td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 class="mume-header" id="conways-game-of-life">Conway&apos;s Game of Life</h2>
+<h1 class="mume-header" id="conways-game-of-life">Conway&apos;s Game of Life</h1>
 
 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
-<img style="height:400px;width:100%;object-fit:cover;margin-bottom:5px;" src="https://www.wired.com/wp-content/uploads/2010/07/LifeHTML5.png" alt="Conway&apos;s Game of Life">
+<img style="height:400px;width:100%;object-fit:cover;margin-bottom:5px;" src="https://lh3.googleusercontent.com/C6HkzTZOrAtlLPkY6tHcUQMX1BoahTG_Gt4ueO_G0dV-J6dqSbT7ElD6Ddg_vg2cNI1D9cIBQMUNaPWIkPrqGVpbE9RY_9Q3Fn0k=s850" alt="Conway&apos;s Game of Life">
 </div>
+<hr>
+<h3 class="mume-header" id="table-of-contents">Table of Contents</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center">S. No</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1.</td>
+<td><a href="#abstract">Abstract</a></td>
+</tr>
+<tr>
+<td style="text-align:center">2.</td>
+<td><a href="#introduction">Introduction</a></td>
+</tr>
+<tr>
+<td style="text-align:center">3.</td>
+<td><a href="#setup-of-the-game">Setup of the Game</a></td>
+</tr>
+<tr>
+<td style="text-align:center">4.</td>
+<td><a href="#the-rules-of-life">The Rules of Life</a></td>
+</tr>
+<tr>
+<td style="text-align:center">5.</td>
+<td><a href="#evolution-of-the-game">Evolution of the Game</a><br><ul><li><a href="#halting-problem">Halting Problem</a></li><li><a href="#still-life">Still Life</a></li><li><a href="#logic-gates">Logic Gates</a></li><li><a href="#turing-machine">Turing Machine</a></li></ul></td>
+</tr>
+<tr>
+<td style="text-align:center">6.</td>
+<td><a href="#legacy">Legacy</a></td>
+</tr>
+<tr>
+<td style="text-align:center">7.</td>
+<td><a href="#conclusion">Conclusion</a></td>
+</tr>
+<tr>
+<td style="text-align:center">8.</td>
+<td><a href="#references">References</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h3 class="mume-header" id="abstract">Abstract</h3>
 
-<p>In the following paper, we will be discussing Conway&apos;s Game of Life.</p>
+<p>In the following paper, we will be discussing the mathematical implications and ramifications surrounding Conway&apos;s Game of Life. While studying the simple rules that make up this game, we attempt to analyse deep connections with various domains of mathematics. Through this paper, we aim to introduce the reader to the Game of Life as inaugarated by John Conway and look briefly into few mathematical problems along the way.</p>
 <hr>
 <h3 class="mume-header" id="introduction">Introduction</h3>
 
@@ -306,402 +347,177 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>Cells with exactly 3 neighbors, come back to life</li>
 </ol>
 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
-<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif" , alt="Conway&apos;s Game of Life Animated">
-<small><em>
-Conway&apos;s Game of Life
-</em></small></div>
-<p>The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns.</p>
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://healeycodes.com/8b3e14dae1b57fa03caa478eaf866de3/conwaysgameoflife.gif" alt="Conway&apos;s Game of Life Animated">
+<small><em>Conway&apos;s Game of Life</em></small></div>
+<p>The Game of Life was initially played out by hand with pens and graph paper- but like everything else, modelling this on a computer made it much easier for exploring patterns and developing its mathematics further.</p>
+<p><a href="cgol.html">Click here to see an implementation of The Game of Life</a></p>
+<p>It starts with a grid with the size of your screen and each cell is either on or off. As the game progresses, the cells change states and patterns emerge- or do they?</p>
 <hr>
-<h3 class="mume-header" id="how-the-game-is-set-up">How the game is set up</h3>
+<h3 class="mume-header" id="setup-of-the-game">Setup of the Game</h3>
 
-<p>Apart from being the basic structural, functional and biological unit of life, a <em>cell</em> is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different &quot;states&quot;, on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as generations in this case. Each generation then switches cells on or off depending on the state of the cells that surround it. Each cell is either alive or dead- on or off. And it&apos;s current standing depends on its neighbours.</p>
-<p>//seeds<br>
-The initial pattern constitutes the <em>seed</em> of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a <em>tick</em>. The further generations are created by repe<br>
-//ticks</p>
+<p>Apart from being the basic structural, functional and biological unit of life, a <strong>cell</strong> is also the building block of the Game of Life. The game is run by placing a number of filled cells on an infinite two-dimensional grid- each of which can be in different <strong>states</strong>, on or off. The grid is initialized to some pattern, the cells each obey defined rules and change states over time according to those rules. After initialization of the grid, the universe continues to evolve through timesteps, specifically known as <strong>generations</strong> in this case. Each generation then switches cells on or off depending on the state of the cells that surround it, known as its <strong>neighbors</strong>.</p>
+<p>The initial pattern constitutes the <strong>seed</strong> of the system. The first generation comes to life by applying the rules simultaneously to every cell in the seed. In a split second (or less), the births and deaths occur. The discrete moment at which the births and deaths occur is referred to as a <strong>tick</strong>. The further generations are created by continually letting the cells interact with each other bounded by the rule set.</p>
+<p>John Conway and his colleagues brainstormed many variations of the rules, the whole discussion boiled down to this:  if the birth rule was too strong&#x2013; everything expanded. If the death rules were too strong&#x2013; everything died. It turned out to be quite hard to balance the rules. Con<em>way</em> still found a <em>way</em>.</p>
 <hr>
 <h3 class="mume-header" id="the-rules-of-life">The Rules of Life</h3>
 
-<p>Conway&apos;s Game of Life is governed by these primary rules:</p>
+<p>Conway&apos;s Game of Life is governed by this primary rule set:</p>
 <ul>
 <li>
 <p><strong>Birth</strong><br>
-a cell that is dead at time <span class="mathjax-exps">$t$</span> will be alive at time <span class="mathjax-exps">$t + 1$</span> if exactly <span class="mathjax-exps">$3$</span> of its <span class="mathjax-exps">$8$</span> neighbors were alive at time <span class="mathjax-exps">$t$</span></p>
+a cell that is dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> will be alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> if exactly <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> of its <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> neighbours were alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span></p>
 </li>
 <li>
 <p><strong>Death</strong> : a cell can die by:</p>
 <ul>
 <li><strong>Overcrowding</strong><br>
-if a cell is alive at time <span class="mathjax-exps">$t$</span> and <span class="mathjax-exps">$4$</span> or more of its neighbors are also alive at time <span class="mathjax-exps">$t$</span>, the cell will be dead at time <span class="mathjax-exps">$t + 1$</span></li>
+if a cell is alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> or more of its neighbours are also alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>, the cell will be dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
 <li><strong>Exposure</strong><br>
-if a live cell at time <span class="mathjax-exps">$t$</span> has only <span class="mathjax-exps">$1$</span> live neighbor or no live neighbors, it will be dead at time <span class="mathjax-exps">$t + 1$</span></li>
+if a live cell at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> has only <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> live neighbour or no live neighbours, it will be dead at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
 </ul>
 </li>
 <li>
 <p><strong>Survival</strong><br>
-a cell survives from time <span class="mathjax-exps">$t$</span> to time <span class="mathjax-exps">$t + 1$</span> if and only if <span class="mathjax-exps">$2$</span> or <span class="mathjax-exps">$3$</span> of its neighbors are alive at time <span class="mathjax-exps">$t$</span></p>
+a cell survives from time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> to time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> if and only if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> or <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> of its neighbours are alive at time <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span></p>
 </li>
 </ul>
 <hr>
-<h3 class="mume-header" id="applications">Applications</h3>
+<h3 class="mume-header" id="evolution-of-the-game">Evolution of the Game</h3>
 
+<p>Given an input grid, one cannot determine whether the board would stablize in any given number of moves. Even John Conway himself could not look at a board and determine the status of the game in the next generation and whether the game would end or not. This introduces us to one of the most important problems in computability theory, <strong>the halting problem</strong>. There simply isn&apos;t any algorithmic way to determine the result of the game.</p>
+<blockquote>
+<h4>The Halting Problem</h4>
+<p>Halting, essentially means terminating. The Halting problem talks about whether the program, when fed with certain input, will finish running or continue to run forever. In 1936, it was proved by Alan Turing that a general algorithm to solve this &apos;problem&apos; doesn&apos;t exist. An interesting fact about this problem is that it is believed the term &apos;halting&apos; was most likely used by Martin Davis in a series of lectures given by him in 1952.<br>
+Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mrow><mi>T</mi><mi>M</mi></mrow></msub></mrow><annotation encoding="application/x-tex">A_{TM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo stretchy="false">{</mo><mo stretchy="false">(</mo><mi>M</mi><mo separator="true">,</mo><mi>w</mi><mo stretchy="false">)</mo><mi mathvariant="normal">&#x2223;</mi><mi>M</mi></mrow><annotation encoding="application/x-tex">=	\{(M,w)|  M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span><span class="mord">&#x2223;</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> is a Turing Machine and	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span>	accepts	<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">w\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">}</span></span></span></span>,<br>
+w being the input provided<br>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mrow><mi>T</mi><mi>M</mi></mrow></msub></mrow><annotation encoding="application/x-tex">A_{TM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is undecidable :</p>
 <ul>
-<li>Glider Gun</li>
-<li>dm application:<br>
-how we could use the Game of Life to make functioning logic gates and perform operations on bit streams</li>
+<li>The only factor for undecidability would be a <em>loop of M on w</em>.</li>
+<li>The question is: can we determine if it will loop forever? It is impossible to determing if a Turing Machine will always halt on every possible input.<br>
+We can simulate M on input w if :</li>
 </ul>
-<hr>
-<h3 class="mume-header" id="patterns">Patterns</h3>
-
-<p>Although it is said that one should never mistake pattern for meaning, in the case of the Game of Life, we might be proving ourselves wrong. The game continues to be quite fascinating, generating a lot of interest in discovering the emerging patterns within.<br>
-We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane &apos;still lives&apos; to ones that become extinct.<br>
-We observe that Conway&apos;s rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome.</p>
+<blockquote>
+<ul>
+<li>M accepts w -&gt; accept(M, w)</li>
+<li>M rejects w -&gt; reject(M, w)<br>
+We can note that this is Turing <em>recognizable</em>.</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>Although it is said that one should never mistake pattern for meaning, in the case of the Game of Life, we might be proving ourselves wrong. The game continues to be quite fascinating, generating a lot of interest in discovering the emerging patterns within.</p>
+<p>We can categorize the patterns observed on the basis of their behavioural complexity- ranging from mundane <strong>still lives</strong> to ones that become extinct. We observe that Conway&apos;s rules are quite easy if we want to go forward from one generation to the next, but to do it in reverse- to try and find out what the previous generation was from a snapshot of the current generation proves to be much more cumbersome.</p>
 <h4 class="mume-header" id="still-life">Still life</h4>
 
-<p>A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period.<br>
-The most common variety of still life is the <strong>block</strong>. Blocks are used as the constituents of many complex devices, like the Gosper glider gun, that we discuss later. The next most common still life is the <strong>beehive</strong>. A beehive is created in a non-interacting sets of four, the formation being known as a <em>honey farm</em>.</p>
-<p>// block and hive and honey farm images</p>
-<p>Following the hive, we have the <strong>loaf</strong>, and a <strong>bi-loaf</strong> is a pair of loaves found together. On further pairing, we have what is called a <strong>bakery</strong>.<br>
-There is no shortage of patterns that we can observe in the game, but we only have a day to finish this so no thank you.<br>
-// loaf, bi-loaf, bakery images</p>
-<p>The most intriguing part of still life, we found to be the <em>eaters</em>. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the <strong>fish-hook</strong>, and another device that is similar but doesn&apos;t quite &apos;eat&apos; the pattern is a <strong>reflector</strong>, that is capable of altering the direction of an incoming spaceship.</p>
-<p>---small line</p>
-<p>In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an <em>infinite</em> form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a <strong>glider gun</strong>. The glider gun is a pattern that &apos;fires&apos; a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form.</p>
-<p>// glider gun image</p>
-<h2 class="mume-header" id="im-sick-of-patterns-someone-else-take-over-pls">I&apos;M SICK OF PATTERNS SOMEONE ELSE TAKE OVER PLS</h2>
-
-<hr>
-<h3 class="mume-header" id="discrete-math-think-of-a-heading">Discrete Math (think of a heading)</h3>
-
-<p>Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. <strong>Spaceships</strong>, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patters. These interactions can be further organized to establish basic computational procedures like <em>logic gates</em> and simple memory counters.</p>
+<p>A still life is a pattern that does not change from one generation to the next, or an oscillator with unit period. The most common variety of still life is the <strong>block</strong>. Blocks are used as the constituents of many complex devices, like the <em>Gosper Glider Gun</em>, that we discuss later. The next most common still life is the <strong>beehive</strong>. A beehive is created in non-interacting sets of four, the formation being known as a <em>honey farm</em>.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:15px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:-5px;" src="https://iq.opengenus.org/content/images/2019/03/staticGameofLife.png" alt="Still Lifes">
+<small><em>
+Still Lifes
+</em></small></div>
+<p>Following the hive, we have the <strong>loaf</strong>, and a <strong>bi-loaf</strong> is a pair of loaves found together. On further pairing, we have what is called a <strong>bakery</strong>.</p>
+<p>The patterns discussed above are among commonly occurring patterns that are stable.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="max-height:300px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/101979337-45d60100-3c82-11eb-8067-4c5e2e59d954.png" , alt="Stable Configuration">
+<small><em>
+A Stable Configuration involving Still Lifes
+</em></small></div>
+<p>The most intriguing part of still life, we found to be the <strong>eaters</strong>. Still lifes can be utilized to modify or destroy other objects. A still life becomes an eater when it can be used to absorb some other pattern, and return to its original state after the collision. An example of eater that has the ability to absorb several varieties of spaceships is the <strong>fish-hook</strong>, and another device that is similar but doesn&apos;t quite &apos;eat&apos; the pattern is a <strong>reflector</strong>, that is capable of altering the direction of an incoming spaceship.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102098257-fabc1980-3e4c-11eb-9cb0-cb222343d8a3.gif" alt="An Eater">
+<small><em>
+An Eater
+</em></small></div>
+<p>In the quest to find out whether there exist patterns in which the number of cells grow infinitely, Conway offered a prize of $50 to anyone who could prove or disprove the existence of an <em>infinite</em> form. A group of researchers from MIT, led by Bill Gosper, came forward with their discovery of a life form, termed a <strong>Glider Gun</strong>.</p>
+<p>A glider gun is a pattern that <em>fires</em> a new glider every 30 generations. The population of living cells grows forever as each new glider adds five new live cells to the original form.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:40px;margin-bottom:20px">
+<div>
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;margin-right:20px" src="https://vignette.wikia.nocookie.net/emergentuniverse/images/d/d0/Game_of_life_animated_glider_2.gif/revision/latest/scale-to-width-down/340?cb=20120305021401" , alt="A Glider">
+<img style="max-height:300px;max-width:45%;object-fit:cover;margin-bottom:10px;" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif" , alt="A Glider Gun">
+</div>
+<small><em>
+A Glider(left) and a Glider Gun(right)
+</em></small></div>
+<p>The discovery of these structures was crucial in further discoveries of even more intricate and mobile structures. People started calling them <strong>spaceships</strong>.</p>
+<p align="center"><iframe width="100%" height="350" src="https://www.youtube.com/embed/C2vgICfQawE?start=69" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p><p>
+</p><p>Apart from just appearing hypnotic, these patterns can also be organized to perform functional operations. <strong>Spaceships</strong>, a term for streams of gliders, can be considered as signals that have causal effects on interaction with other patterns. These interactions can be further organized to establish basic computational procedures like logic gates and simple memory counters.</p>
+<h4>Logic Gates</h4>
+<p>We have seen that patterns formed in the Game of Life can be used to generate and destroy signals- take for instance, the eater and glider gun.</p>
+<p>From this, we get our one, and our zero. When we have a one and a zero, we have what is known is binary logic. If we have binary logic, we can make logic gates.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-top:20px;margin-bottom:25px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://computerscienceigsce.files.wordpress.com/2016/08/comp-sci-logic-gates.png?w=520" , alt="Logic Gates">
+<small><em>Binary Logic Gates</em></small>
+</div>
+<p>While trying to implement logic gates using the Game, we come across these three requirements:</p>
+<ul>
+<li>Some kind of electrical pulses to represent input</li>
+<li>Wires to transmit the electrical pulses</li>
+<li>Devices to process the given input and compute the Boolean output</li>
+</ul>
+<p>Using gliders, we can encode these, utilizing components from the Game of Life:</p>
+<ul>
+<li>I/O pulses <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Gliders</li>
+<li>Wires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Glider movement trajectories</li>
+<li>Processing devices <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">=&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> Glider collisions</li>
+</ul>
+<p>Here are a few logic gates implemented through The Game of Life:</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="height:350px;max-width:100%;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102111896-f8fa5200-3e5c-11eb-9362-b5d69dd8a34b.gif" , alt="NOT Gate">
+<small><em>
+NOT Gate
+</em></small></div>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:20px">
+<img style="height:350px;max-width:100%;margin-bottom:5px;" src="https://user-images.githubusercontent.com/63326129/102113174-b9346a00-3e5e-11eb-9846-9362db4aecb2.gif" , alt="AND Gate">
+<small><em>
+AND Gate
+</em></small></div>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;width:100%;object-fit:cover;margin-bottom:5px;" src="http://article.sapub.org/image/10.5923.j.ijis.20160601.02_010.gif" , alt>
+<small><em>
+Requirements to Construct Gates
+</em></small></div>
+<p>We also implement some glider guns, that play no role in the production of input, but they help in executing collision, or deflecting the path of the glider stream to enhance the collision, termed <strong>process guns</strong>. Just like process guns, eaters are used to destroy some gliders that do not help in determining the output. From the above findings, we see that a stream of gliders can encode any data.<br>
+For instance, take  <code>1,0,1 = glider, no glider, glider</code></p>
+<p>We handled the input so far- and our work seems to manipulate our input when it is true fairly easily. However, we must also program the gliders to propagate only if the input is true- or stop when the input is false. This can be done via coupling the glider gun with a block- the still life we learnt about in the previous section; a glider is eliminated by a block during collision.</p>
+<p>Essentially, in an input stream, a glider indicates a true pulse, and a <em>missing</em> glider indicates a false pulse.</p>
+<p>Using these tools, some people have gone so far as to code The Game of Life using the Game of Life!</p>
+<p align="center">
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/xP5-iIeKXE8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+<p>This introduces us to the concept of <em>Turing Machines</em>.</p>
+<blockquote>
+<h4>Turing Machine</h4>
 <p>A <em>Turing machine</em> is a hypothetical machine that can simulate any computer algorithm, no matter how complicated. In the theory of computation, many major complexity classes can be characterized by an appropriately restricted Turing machine, for instance the major P versus NP classes.</p>
-<p>The above properties imply that the Game of Life can be considered <em>Turing complete</em>, making it theoritically equivalent to a &apos;Universal Turing Machine&apos;. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding.</p>
+</blockquote>
+<p>The above properties imply that the Game of Life can be considered <em>Turing complete</em>, making it theoritically equivalent to a &apos;Universal Turing Machine&apos;. A simulation of the Game of Life universality was proved by its creator; Conway showed that a universal Turing machine is embedded in the game, that the behaviour of the Turing machine is imitated by the space-time dynamic of the game&apos;s cellular automaton. This essentially translates to the Game of life having the ability to possess unlimited computational power in the absence of time and memory constraints, however improbable sounding.</p>
 <hr>
-<h1 class="mume-header" id="heading-1">heading 1</h1>
+<h3 class="mume-header" id="legacy">Legacy</h3>
 
-<h2 class="mume-header" id="heading-2">heading 2</h2>
-
-<h3 class="mume-header" id="heading-3">heading 3</h3>
-
-<h4 class="mume-header" id="heading-4">heading 4</h4>
-
-<h5 class="mume-header" id="heading-5">heading 5</h5>
-
-<h6 class="mume-header" id="heading-6">heading 6</h6>
-
+<p>John Conway died on the 11th of April, 2020 due to COVID-19 complications. Conway&apos;s work on the Game of Life opened up several avenues in the field of mathematical research- primarily the subject of &apos;cellular automata&apos;.</p>
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;margin-bottom:10px">
+<img style="max-height:350px;max-width:100%;object-fit:cover;margin-bottom:5px;" src="https://rjlipton.files.wordpress.com/2020/04/johnhortonconway1987.jpg" alt="John Conway">
+<small><em>
+John Conway
+</em></small></div>
+<p>In an interview, on being asked if he hated the Game of Life, despite being proud of his achievement, he still believed that it overshadowed every other aspect of his mathematical work- or life, in general. Conway worked on several branches of mathematics:  combinatorial game theory, group theory, knot theory and geometric topology.</p>
 <hr>
-<p><em>italic</em><br>
-<strong>bold</strong><br>
-<s>strikethrough</s></p>
+<h3 class="mume-header" id="conclusion">Conclusion</h3>
+
+<p>We observe that many ideas that have been originally developed in Conway&apos;s game have found themselves being applied in other fields, a particularly cool implementation being creating sound patterns using a Musical Instrument Digital Interface (MDMI)- essentially creating music! Similarly, the reach of John Conway&apos;s Game of Life touched upon various domains, in mathematics and everyday life. It is baffling how four simple rules can effectively be used as a basis for explaining various phenomena, ranging from astronomical events to the evolution and survival of various cells, species and biological organisms.<br>
+Considering the extent of the applications of the Game, it is no surprise that one cannot limit the Game of Life to a mere mathematical game.</p>
 <hr>
+<h3 class="mume-header" id="references">References</h3>
+
 <ul>
-<li>point 1</li>
-<li>point 2
-<ul>
-<li>sub point</li>
-<li>sub point 2
-<ul>
-<li>sub poit 3</li>
+<li><a href="http://www.scholarpedia.org/article/Game_of_Life">http://www.scholarpedia.org/article/Game_of_Life</a></li>
+<li><a href="http://article.sapub.org/10.5923.j.ijis.20160601.02.html">http://article.sapub.org/10.5923.j.ijis.20160601.02.html</a></li>
+<li><a href="http://rendell-attic.org/gol/tm.htm">http://rendell-attic.org/gol/tm.htm</a></li>
+<li><a href="https://link.springer.com/chapter/10.1007%2F978-1-4471-0129-1_17">https://link.springer.com/chapter/10.1007%2F978-1-4471-0129-1_17</a></li>
+<li><a href="https://mathworld.wolfram.com/GameofLife.html">https://mathworld.wolfram.com/GameofLife.html</a></li>
+<li><a href="http://golly.sourceforge.net">http://golly.sourceforge.net</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Halting_problem">https://en.wikipedia.org/wiki/Halting_problem</a></li>
+<li><a href="http://pi.math.cornell.edu/~lipa/mec/lesson6.html">http://pi.math.cornell.edu/~lipa/mec/lesson6.html</a></li>
+<li><a href="https://ocw.mit.edu/courses/mathematics/18-s997-introduction-to-matlab-programming-fall-2011/conway-game-of-life/conway-game-of-life-implementation/">https://ocw.mit.edu/courses/mathematics/18-s997-introduction-to-matlab-programming-fall-2011/conway-game-of-life/conway-game-of-life-implementation/</a></li>
+<li><a href="https://beltoforion.de/en/game_of_life/">https://beltoforion.de/en/game_of_life/</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li>back to the actual point</li>
-</ul>
-<ol>
-<li>order</li>
-<li>order</li>
-<li>order3</li>
-</ol>
-<hr>
-<table>
-<thead>
-<tr>
-<th>topic</th>
-<th>heading</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hello</td>
-<td>10</td>
-</tr>
-<tr>
-<td>842r</td>
-<td>23</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Hi <span class="mathjax-exps">$z = x + y$</span>.</p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<p></p><div class="mathjax-exps">$$a^2 + b^2 = c^2$$</div>.<p></p>
-<p></p><div class="mathjax-exps">$$\begin{vmatrix} a &amp; b\\ c &amp; d \end{vmatrix}=ad-bc$$</div><p></p>
-<hr>
-<p><img src="https://i.pinimg.com/originals/42/b8/21/42b8212c9b9f4122b2c83f4914332f51.gif" alt="naruto rasengan"></p>
-<p><a href="http://google.com">link to google</a></p>
-<p><a href="https://youtu.be/6avJHaC3C2U?t=272">link you have to watch</a></p>
-<p><a href="cgol.html">link to implementation</a></p>
 <hr>
 
-      </div>
-      
-      
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    </body></html>
